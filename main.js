@@ -3,6 +3,7 @@ const express = require("express");
 const Pusher = require("pusher");
 const morgan = require("morgan");
 const faker = require("faker");
+const uuidv1 = require("uuid/v1");
 
 
 const {
@@ -21,6 +22,7 @@ server.all("*", accessControl);
 
 
 let counter = 0;
+const ids = [];
 
 
 /*
@@ -327,6 +329,7 @@ server.get("/partners/trigger/add", (req, res) => {
   console.log("PUSHER_TRIGGER:", Date.now());
   const items = ["guest", "popin", "member"];
 
+
   const channels_client = new Pusher({
     appId: "839088",
     key: "4f993048f17eef9bf530",
@@ -335,14 +338,31 @@ server.get("/partners/trigger/add", (req, res) => {
     useTLS: true,
   });
 
-  channels_client.trigger("private-web-78", "checkin", {
+
+  const id = uuidv1();
+  ids.push(id);
+
+
+  const payload = {
+    id,
+    image: "https://source.unsplash.com/random/50x50",
     name: faker.name.findName(),
     firstVisit: true,
     status: "checkin",
     memberType: items[Math.floor(Math.random() * items.length)],
     checkInTime: Date.now(),
-  });
+  };
 
+
+  if (Math.round(Math.random())) {
+    payload.buddy = {
+      name: faker.name.findName(),
+      image: "https://source.unsplash.com/random/28x28",
+    };
+  }
+
+
+  channels_client.trigger("private-web-78", "checkin", payload);
   res.status(200).json({}).end();
 });
 
@@ -356,6 +376,7 @@ server.get("/partners/trigger/add", (req, res) => {
 server.get("/partners/trigger/del", (req, res) => {
   console.log("PUSHER_TRIGGER:", Date.now());
 
+
   const channels_client = new Pusher({
     appId: "839088",
     key: "4f993048f17eef9bf530",
@@ -364,13 +385,15 @@ server.get("/partners/trigger/del", (req, res) => {
     useTLS: true
   });
 
-  channels_client.trigger("private-web-78", "checkin", {
-    name: `Joel Marquez ${++counter}`,
-    firstVisit: true,
-    status: "checkout",
-    memberType: "guest",
-    checkInTime: Date.now(),
+
+  const [id] = ids.splice((ids.length - 1), 1);
+
+
+  channels_client.trigger("private-web-78", "checkout", {
+    id,
+    checkOutTime: Date.now(),
   });
+
 
   res.status(200).json({}).end();
 });
