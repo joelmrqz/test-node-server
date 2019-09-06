@@ -345,7 +345,7 @@ server.get("/partners/trigger/add", (req, res) => {
 
   const payload = {
     id,
-    image: "https://source.unsplash.com/random/50x50",
+    image: "https://source.unsplash.com/random/70x70",
     name: faker.name.findName(),
     firstVisit: true,
     status: "checkin",
