@@ -327,7 +327,7 @@ server.post("/partners/pusher", (req, res) => {
  */
 server.get("/partners/trigger/add", (req, res) => {
   console.log("PUSHER_TRIGGER:", Date.now());
-  const items = ["guest", "popin", "member"];
+  const items = ["guest", "popin", "member", "classpass"];
 
 
   const channels_client = new Pusher({
@@ -347,18 +347,137 @@ server.get("/partners/trigger/add", (req, res) => {
     id,
     image: "https://source.unsplash.com/random/70x70",
     name: faker.name.findName(),
-    firstVisit: true,
+    email: faker.internet.email(),
+    phone: faker.phone.phoneNumberFormat(),
     status: "checkin",
     memberType: items[Math.floor(Math.random() * items.length)],
     checkInTime: Date.now(),
+    address: {
+      line1: faker.address.streetAddress(),
+      line2: faker.address.city(),
+      line3: `${faker.address.state()}, ${faker.address.stateAbbr()}, ${faker.address.zipCode()}`,
+    },
+    dates: {
+      joined: Date.now(),
+      contractEnd: Date.now(),
+      firstVisit: Date.now(),
+    },
   };
 
 
   if (Math.round(Math.random())) {
-    payload.buddy = {
+    payload.referrer = {
       name: faker.name.findName(),
-      image: "https://source.unsplash.com/random/28x28",
+      image: "https://source.unsplash.com/random/30x30",
     };
+  }
+
+
+  payload.referred = [];
+
+  if (Math.round(Math.random())) {
+    payload.referred.push({
+      name: faker.name.findName(),
+      image: "https://source.unsplash.com/random/30x30",
+    });
+  }
+
+  if (Math.round(Math.random())) {
+    payload.referred.push({
+      name: faker.name.findName(),
+      image: "https://source.unsplash.com/random/30x30",
+    });
+  }
+
+  if (Math.round(Math.random())) {
+    payload.referred.push({
+      name: faker.name.findName(),
+      image: "https://source.unsplash.com/random/30x30",
+    });
+  }
+
+
+  payload.classes = [];
+
+  if (Math.round(Math.random())) {
+    payload.classes.push({
+      id: uuidv1(),
+      name: faker.random.word(),
+      image: "https://source.unsplash.com/random/30x30",
+      start: Date.now(),
+      instructor: {
+        name: faker.name.findName(),
+        image: "https://source.unsplash.com/random/30x30",
+      },
+    });
+  }
+
+  if (Math.round(Math.random())) {
+    payload.classes.push({
+      id: uuidv1(),
+      name: faker.random.word(),
+      image: "https://source.unsplash.com/random/30x30",
+      start: Date.now(),
+      instructor: {
+        name: faker.name.findName(),
+        image: "https://source.unsplash.com/random/30x30",
+      },
+    });
+  }
+
+  if (Math.round(Math.random())) {
+    payload.classes.push({
+      id: uuidv1(),
+      name: faker.random.word(),
+      image: "https://source.unsplash.com/random/30x30",
+      start: Date.now(),
+      instructor: {
+        name: faker.name.findName(),
+        image: "https://source.unsplash.com/random/30x30",
+      },
+    });
+  }
+
+
+  payload.sessions = [];
+
+  if (Math.round(Math.random())) {
+    payload.sessions.push({
+      id: uuidv1(),
+      name: faker.random.word(),
+      image: "https://source.unsplash.com/random/30x30",
+      start: Date.now(),
+      instructor: {
+        name: faker.name.findName(),
+        image: "https://source.unsplash.com/random/30x30",
+      },
+    });
+  }
+
+  if (Math.round(Math.random())) {
+    payload.sessions.push({
+      id: uuidv1(),
+      name: faker.random.word(),
+      image: "https://source.unsplash.com/random/30x30",
+      start: Date.now(),
+      instructor: {
+        name: faker.name.findName(),
+        image: "https://source.unsplash.com/random/30x30",
+      },
+    });
+  }
+
+  if (Math.round(Math.random())) {
+    payload.sessions.push({
+      id: uuidv1(),
+      name: faker.random.word(),
+      image: "https://source.unsplash.com/random/30x30",
+      start: Date.now(),
+      instructor: {
+        name: faker.name.findName(),
+        image: "https://source.unsplash.com/random/30x30",
+      },
+    });
   }
 
 
