@@ -4,6 +4,7 @@ const Pusher = require("pusher");
 const morgan = require("morgan");
 const faker = require("faker");
 const uuidv1 = require("uuid/v1");
+const moment = require("moment");
 
 
 const {
@@ -32,24 +33,24 @@ const ids = [];
  */
 server.use("/test-jsonp-endpoint", (req, res) => {
   const data = [
-  {
-    id: "123123123",
-    endTime: "2019-06-17T13:00:00.000Z",
-    startTime: "2019-06-17T10:00:00.000Z",
-    cancelled: false,
-    facilityClass: {
-      id: 103,
-      image: "",
-      name: "Boxing - Adults",
-    },
-    facilityInstructor: {
-      firstName: "Joel",
-      id: 101,
-      lastName: null,
-      name: "Joel Marquez",
-      profileImage: "",
-    },
-  }
+    {
+      id: "123123123",
+      endTime: "2019-06-17T13:00:00.000Z",
+      startTime: "2019-06-17T10:00:00.000Z",
+      cancelled: false,
+      facilityClass: {
+        id: 103,
+        image: "",
+        name: "Boxing - Adults",
+      },
+      facilityInstructor: {
+        firstName: "Joel",
+        id: 101,
+        lastName: null,
+        name: "Joel Marquez",
+        profileImage: "",
+      },
+    }
   ];
 
   response.status(200).jsonp(data).end();
@@ -329,6 +330,9 @@ server.get("/partners/trigger/add", (req, res) => {
   console.log("PUSHER_TRIGGER:", Date.now());
   const items = ["guest", "popin", "member", "classpass"];
 
+  const classesDates = [0, 1, 2, 3, 4, 5];
+  const sessionsDates = [0, 1, 2, 3, 4, 5];
+  const checkinDates = [0, 1, 2, 3, 4, 5]
 
   const channels_client = new Pusher({
     appId: "839088",
@@ -338,10 +342,8 @@ server.get("/partners/trigger/add", (req, res) => {
     useTLS: true,
   });
 
-
   const id = uuidv1();
   ids.push(id);
-
 
   const payload = {
     id,
@@ -351,7 +353,7 @@ server.get("/partners/trigger/add", (req, res) => {
     phone: faker.phone.phoneNumberFormat(),
     status: "checkin",
     memberType: items[Math.floor(Math.random() * items.length)],
-    checkInTime: Date.now(),
+    checkInTime: moment().add(checkinDates[Math.floor(Math.random() * checkinDates.length)], 'hours').toDate(),
     address: {
       line1: faker.address.streetAddress(),
       line2: faker.address.city(),
@@ -364,14 +366,12 @@ server.get("/partners/trigger/add", (req, res) => {
     },
   };
 
-
   if (Math.round(Math.random())) {
     payload.referrer = {
       name: faker.name.findName(),
       image: "https://source.unsplash.com/random/30x30",
     };
   }
-
 
   payload.referred = [];
 
@@ -396,7 +396,6 @@ server.get("/partners/trigger/add", (req, res) => {
     });
   }
 
-
   payload.classes = [];
 
   if (Math.round(Math.random())) {
@@ -404,7 +403,8 @@ server.get("/partners/trigger/add", (req, res) => {
       id: uuidv1(),
       name: faker.random.word(),
       image: "https://source.unsplash.com/random/30x30",
-      start: Date.now(),
+      start: moment().add(classesDates[Math.floor(Math.random() * classesDates.length)], 'days').toDate(),
+      type: "class",
       instructor: {
         name: faker.name.findName(),
         image: "https://source.unsplash.com/random/30x30",
@@ -417,7 +417,8 @@ server.get("/partners/trigger/add", (req, res) => {
       id: uuidv1(),
       name: faker.random.word(),
       image: "https://source.unsplash.com/random/30x30",
-      start: Date.now(),
+      start: moment().add(classesDates[Math.floor(Math.random() * classesDates.length)], 'days').toDate(),
+      type: "class",
       instructor: {
         name: faker.name.findName(),
         image: "https://source.unsplash.com/random/30x30",
@@ -430,7 +431,8 @@ server.get("/partners/trigger/add", (req, res) => {
       id: uuidv1(),
       name: faker.random.word(),
       image: "https://source.unsplash.com/random/30x30",
-      start: Date.now(),
+      start: moment().add(classesDates[Math.floor(Math.random() * classesDates.length)], 'days').toDate(),
+      type: "class",
       instructor: {
         name: faker.name.findName(),
         image: "https://source.unsplash.com/random/30x30",
@@ -438,15 +440,33 @@ server.get("/partners/trigger/add", (req, res) => {
     });
   }
 
+  if (Math.round(Math.random())) {
+    payload.classes.push({
+      id: uuidv1(),
+      name: faker.random.word(),
+      image: "https://source.unsplash.com/random/30x30",
+      start: moment().add(classesDates[Math.floor(Math.random() * classesDates.length)], 'days').toDate(),
+      type: "class",
+      instructor: {
+        name: faker.name.findName(),
+        image: "https://source.unsplash.com/random/30x30",
+      },
+    });
+  }
 
   payload.sessions = [];
 
+  console.log('@@@@@@@@@@@@', sessionsDates[Math.floor(Math.random() * sessionsDates.length)]);
+  console.log('@@@@@@@@@@@@', sessionsDates[Math.floor(Math.random() * sessionsDates.length)]);
+  console.log('@@@@@@@@@@@@', sessionsDates[Math.floor(Math.random() * sessionsDates.length)]);
+
   if (Math.round(Math.random())) {
     payload.sessions.push({
       id: uuidv1(),
       name: faker.random.word(),
       image: "https://source.unsplash.com/random/30x30",
-      start: Date.now(),
+      start: moment().add(sessionsDates[Math.floor(Math.random() * sessionsDates.length)], 'days').toDate(),
+      type: "session",
       instructor: {
         name: faker.name.findName(),
         image: "https://source.unsplash.com/random/30x30",
@@ -459,7 +479,8 @@ server.get("/partners/trigger/add", (req, res) => {
       id: uuidv1(),
       name: faker.random.word(),
       image: "https://source.unsplash.com/random/30x30",
-      start: Date.now(),
+      start: moment().add(sessionsDates[Math.floor(Math.random() * sessionsDates.length)], 'days').toDate(),
+      type: "session",
       instructor: {
         name: faker.name.findName(),
         image: "https://source.unsplash.com/random/30x30",
@@ -472,7 +493,8 @@ server.get("/partners/trigger/add", (req, res) => {
       id: uuidv1(),
       name: faker.random.word(),
       image: "https://source.unsplash.com/random/30x30",
-      start: Date.now(),
+      start: moment().add(sessionsDates[Math.floor(Math.random() * sessionsDates.length)], 'days').toDate(),
+      type: "session",
       instructor: {
         name: faker.name.findName(),
         image: "https://source.unsplash.com/random/30x30",
@@ -480,8 +502,35 @@ server.get("/partners/trigger/add", (req, res) => {
     });
   }
 
+  if (Math.round(Math.random())) {
+    payload.sessions.push({
+      id: uuidv1(),
+      name: faker.random.word(),
+      image: "https://source.unsplash.com/random/30x30",
+      start: moment().add(sessionsDates[Math.floor(Math.random() * sessionsDates.length)], 'days').toDate(),
+      type: "session",
+      instructor: {
+        name: faker.name.findName(),
+        image: "https://source.unsplash.com/random/30x30",
+      },
+    });
+  }
 
-  channels_client.trigger("private-web-78", "checkin", payload);
+  payload.inbox = [];
+
+  if (Math.round(Math.random())) {
+    payload.inbox.push(faker.company.catchPhrase());
+  }
+
+  if (Math.round(Math.random())) {
+    payload.inbox.push(faker.company.catchPhrase());
+  }
+
+  if (Math.round(Math.random())) {
+    payload.inbox.push(faker.company.catchPhrase());
+  }
+
+  channels_client.trigger("private-web-1929523201", "checkin", payload);
   res.status(200).json({}).end();
 });
 
@@ -508,7 +557,7 @@ server.get("/partners/trigger/del", (req, res) => {
   const [id] = ids.splice((ids.length - 1), 1);
 
 
-  channels_client.trigger("private-web-78", "checkout", {
+  channels_client.trigger("private-web-1929523201", "checkout", {
     id,
     checkOutTime: Date.now(),
   });
@@ -516,6 +565,79 @@ server.get("/partners/trigger/del", (req, res) => {
 
   res.status(200).json({}).end();
 });
+
+
+
+/*
+ * ====================
+ * COMPANY INFO
+ * ====================
+ */
+server.get('/partners/facilities', async (req, res) => {
+  const payload = [{
+    id: 65,
+    name: 'Limelight Fitness',
+    images: [
+      'https://s3.amazonaws.com/images-popin/limelight/weights3.jpg',
+      'https://s3.amazonaws.com/images-popin/limelight/weights2.jpg',
+      'https://s3.amazonaws.com/images-popin/limelight/weights.jpg',
+      'https://s3.amazonaws.com/images-popin/limelight/treadmills.jpg',
+      'https://s3.amazonaws.com/images-popin/limelight/studio.jpg',
+      'https://s3.amazonaws.com/images-popin/limelight/locker.jpg'
+    ],
+    description: null,
+    price: 22,
+    phone: '6469645741',
+    hours: {
+      '1': {
+        closingTime: '23:00',
+        openingTime: '05:00'
+      },
+      '2': {
+        closingTime: '23:00',
+        openingTime: '05:00'
+      },
+      '3': {
+        closingTime: '23:00',
+        openingTime: '05:00'
+      },
+      '4': {
+        closingTime: '23:00',
+        openingTime: '05:00'
+      },
+      '5': {
+        closingTime: '21:00',
+        openingTime: '05:00'
+      },
+      '6': {
+        closingTime: '19:00',
+        openingTime: '05:00'
+      },
+      '7': {
+        closingTime: '17:00',
+        openingTime: '05:00'
+      }
+    },
+    companyId: 36,
+    status: 'active',
+    addressId: 70,
+    slug: 'limelight-fitness-656-avenue-of-the-americas',
+    facilityId: '1929523201',
+    address: {
+      id: 70,
+      street: '656 Avenue of the Americas',
+      state: 'NY',
+      city: 'New York',
+      zip: '10011',
+      neighborhood: 'Chelsea'
+    },
+    roleId: 3,
+  }];
+
+
+  res.status(200).json(payload).end();
+});
+
 
 
 const start = `# SERVER @ PORT ${server.get("port")} #`;
