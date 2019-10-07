@@ -347,190 +347,202 @@ server.get("/partners/trigger/add", (req, res) => {
 
   const payload = {
     id,
-    image: "https://source.unsplash.com/random/70x70",
-    name: faker.name.findName(),
-    email: faker.internet.email(),
-    phone: faker.phone.phoneNumberFormat(),
-    status: "checkin",
-    memberType: items[Math.floor(Math.random() * items.length)],
-    checkInTime: moment().add(checkinDates[Math.floor(Math.random() * checkinDates.length)], 'hours').toDate(),
-    address: {
-      line1: faker.address.streetAddress(),
-      line2: faker.address.city(),
-      line3: `${faker.address.state()}, ${faker.address.stateAbbr()}, ${faker.address.zipCode()}`,
-    },
-    dates: {
-      joined: Date.now(),
-      contractEnd: Date.now(),
-      firstVisit: Date.now(),
-    },
-  };
-
-  if (Math.round(Math.random())) {
-    payload.referrer = {
-      name: faker.name.findName(),
-      image: "https://source.unsplash.com/random/30x30",
-    };
+    checkInTime: Date.now(),
+    facilityId: 78,
+    firstVisit: true,
+    memberId: "473183202",
+    memberType: "guest",
+    profilePictureUrl: "https://s3.amazonaws.com/images-popin/profile/000007fd9b884717ae92dcc83aa2806d",
+    status: "checkedIn",
+    workoutId: "3001442144",
   }
 
-  payload.referred = [];
+  // const payload = {
+  //   id,
+  //   image: "https://source.unsplash.com/random/70x70",
+  //   name: faker.name.findName(),
+  //   email: faker.internet.email(),
+  //   phone: faker.phone.phoneNumberFormat(),
+  //   status: "checkin",
+  //   memberType: items[Math.floor(Math.random() * items.length)],
+  //   checkInTime: moment().add(checkinDates[Math.floor(Math.random() * checkinDates.length)], 'hours').toDate(),
+  //   address: {
+  //     line1: faker.address.streetAddress(),
+  //     line2: faker.address.city(),
+  //     line3: `${faker.address.state()}, ${faker.address.stateAbbr()}, ${faker.address.zipCode()}`,
+  //   },
+  //   dates: {
+  //     joined: Date.now(),
+  //     contractEnd: Date.now(),
+  //     firstVisit: Date.now(),
+  //   },
+  // };
 
-  if (Math.round(Math.random())) {
-    payload.referred.push({
-      name: faker.name.findName(),
-      image: "https://source.unsplash.com/random/30x30",
-    });
-  }
+  // if (Math.round(Math.random())) {
+  //   payload.referrer = {
+  //     name: faker.name.findName(),
+  //     image: "https://source.unsplash.com/random/30x30",
+  //   };
+  // }
 
-  if (Math.round(Math.random())) {
-    payload.referred.push({
-      name: faker.name.findName(),
-      image: "https://source.unsplash.com/random/30x30",
-    });
-  }
+  // payload.referred = [];
 
-  if (Math.round(Math.random())) {
-    payload.referred.push({
-      name: faker.name.findName(),
-      image: "https://source.unsplash.com/random/30x30",
-    });
-  }
+  // if (Math.round(Math.random())) {
+  //   payload.referred.push({
+  //     name: faker.name.findName(),
+  //     image: "https://source.unsplash.com/random/30x30",
+  //   });
+  // }
 
-  payload.classes = [];
+  // if (Math.round(Math.random())) {
+  //   payload.referred.push({
+  //     name: faker.name.findName(),
+  //     image: "https://source.unsplash.com/random/30x30",
+  //   });
+  // }
 
-  if (Math.round(Math.random())) {
-    payload.classes.push({
-      id: uuidv1(),
-      name: faker.random.word(),
-      image: "https://source.unsplash.com/random/30x30",
-      start: moment().add(classesDates[Math.floor(Math.random() * classesDates.length)], 'days').toDate(),
-      type: "class",
-      instructor: {
-        name: faker.name.findName(),
-        image: "https://source.unsplash.com/random/30x30",
-      },
-    });
-  }
+  // if (Math.round(Math.random())) {
+  //   payload.referred.push({
+  //     name: faker.name.findName(),
+  //     image: "https://source.unsplash.com/random/30x30",
+  //   });
+  // }
 
-  if (Math.round(Math.random())) {
-    payload.classes.push({
-      id: uuidv1(),
-      name: faker.random.word(),
-      image: "https://source.unsplash.com/random/30x30",
-      start: moment().add(classesDates[Math.floor(Math.random() * classesDates.length)], 'days').toDate(),
-      type: "class",
-      instructor: {
-        name: faker.name.findName(),
-        image: "https://source.unsplash.com/random/30x30",
-      },
-    });
-  }
+  // payload.classes = [];
 
-  if (Math.round(Math.random())) {
-    payload.classes.push({
-      id: uuidv1(),
-      name: faker.random.word(),
-      image: "https://source.unsplash.com/random/30x30",
-      start: moment().add(classesDates[Math.floor(Math.random() * classesDates.length)], 'days').toDate(),
-      type: "class",
-      instructor: {
-        name: faker.name.findName(),
-        image: "https://source.unsplash.com/random/30x30",
-      },
-    });
-  }
+  // if (Math.round(Math.random())) {
+  //   payload.classes.push({
+  //     id: uuidv1(),
+  //     name: faker.random.word(),
+  //     image: "https://source.unsplash.com/random/30x30",
+  //     start: moment().add(classesDates[Math.floor(Math.random() * classesDates.length)], 'days').toDate(),
+  //     type: "class",
+  //     instructor: {
+  //       name: faker.name.findName(),
+  //       image: "https://source.unsplash.com/random/30x30",
+  //     },
+  //   });
+  // }
 
-  if (Math.round(Math.random())) {
-    payload.classes.push({
-      id: uuidv1(),
-      name: faker.random.word(),
-      image: "https://source.unsplash.com/random/30x30",
-      start: moment().add(classesDates[Math.floor(Math.random() * classesDates.length)], 'days').toDate(),
-      type: "class",
-      instructor: {
-        name: faker.name.findName(),
-        image: "https://source.unsplash.com/random/30x30",
-      },
-    });
-  }
+  // if (Math.round(Math.random())) {
+  //   payload.classes.push({
+  //     id: uuidv1(),
+  //     name: faker.random.word(),
+  //     image: "https://source.unsplash.com/random/30x30",
+  //     start: moment().add(classesDates[Math.floor(Math.random() * classesDates.length)], 'days').toDate(),
+  //     type: "class",
+  //     instructor: {
+  //       name: faker.name.findName(),
+  //       image: "https://source.unsplash.com/random/30x30",
+  //     },
+  //   });
+  // }
 
-  payload.sessions = [];
+  // if (Math.round(Math.random())) {
+  //   payload.classes.push({
+  //     id: uuidv1(),
+  //     name: faker.random.word(),
+  //     image: "https://source.unsplash.com/random/30x30",
+  //     start: moment().add(classesDates[Math.floor(Math.random() * classesDates.length)], 'days').toDate(),
+  //     type: "class",
+  //     instructor: {
+  //       name: faker.name.findName(),
+  //       image: "https://source.unsplash.com/random/30x30",
+  //     },
+  //   });
+  // }
 
-  console.log('@@@@@@@@@@@@', sessionsDates[Math.floor(Math.random() * sessionsDates.length)]);
-  console.log('@@@@@@@@@@@@', sessionsDates[Math.floor(Math.random() * sessionsDates.length)]);
-  console.log('@@@@@@@@@@@@', sessionsDates[Math.floor(Math.random() * sessionsDates.length)]);
+  // if (Math.round(Math.random())) {
+  //   payload.classes.push({
+  //     id: uuidv1(),
+  //     name: faker.random.word(),
+  //     image: "https://source.unsplash.com/random/30x30",
+  //     start: moment().add(classesDates[Math.floor(Math.random() * classesDates.length)], 'days').toDate(),
+  //     type: "class",
+  //     instructor: {
+  //       name: faker.name.findName(),
+  //       image: "https://source.unsplash.com/random/30x30",
+  //     },
+  //   });
+  // }
 
-  if (Math.round(Math.random())) {
-    payload.sessions.push({
-      id: uuidv1(),
-      name: faker.random.word(),
-      image: "https://source.unsplash.com/random/30x30",
-      start: moment().add(sessionsDates[Math.floor(Math.random() * sessionsDates.length)], 'days').toDate(),
-      type: "session",
-      instructor: {
-        name: faker.name.findName(),
-        image: "https://source.unsplash.com/random/30x30",
-      },
-    });
-  }
+  // payload.sessions = [];
 
-  if (Math.round(Math.random())) {
-    payload.sessions.push({
-      id: uuidv1(),
-      name: faker.random.word(),
-      image: "https://source.unsplash.com/random/30x30",
-      start: moment().add(sessionsDates[Math.floor(Math.random() * sessionsDates.length)], 'days').toDate(),
-      type: "session",
-      instructor: {
-        name: faker.name.findName(),
-        image: "https://source.unsplash.com/random/30x30",
-      },
-    });
-  }
+  // console.log('@@@@@@@@@@@@', sessionsDates[Math.floor(Math.random() * sessionsDates.length)]);
+  // console.log('@@@@@@@@@@@@', sessionsDates[Math.floor(Math.random() * sessionsDates.length)]);
+  // console.log('@@@@@@@@@@@@', sessionsDates[Math.floor(Math.random() * sessionsDates.length)]);
 
-  if (Math.round(Math.random())) {
-    payload.sessions.push({
-      id: uuidv1(),
-      name: faker.random.word(),
-      image: "https://source.unsplash.com/random/30x30",
-      start: moment().add(sessionsDates[Math.floor(Math.random() * sessionsDates.length)], 'days').toDate(),
-      type: "session",
-      instructor: {
-        name: faker.name.findName(),
-        image: "https://source.unsplash.com/random/30x30",
-      },
-    });
-  }
+  // if (Math.round(Math.random())) {
+  //   payload.sessions.push({
+  //     id: uuidv1(),
+  //     name: faker.random.word(),
+  //     image: "https://source.unsplash.com/random/30x30",
+  //     start: moment().add(sessionsDates[Math.floor(Math.random() * sessionsDates.length)], 'days').toDate(),
+  //     type: "session",
+  //     instructor: {
+  //       name: faker.name.findName(),
+  //       image: "https://source.unsplash.com/random/30x30",
+  //     },
+  //   });
+  // }
 
-  if (Math.round(Math.random())) {
-    payload.sessions.push({
-      id: uuidv1(),
-      name: faker.random.word(),
-      image: "https://source.unsplash.com/random/30x30",
-      start: moment().add(sessionsDates[Math.floor(Math.random() * sessionsDates.length)], 'days').toDate(),
-      type: "session",
-      instructor: {
-        name: faker.name.findName(),
-        image: "https://source.unsplash.com/random/30x30",
-      },
-    });
-  }
+  // if (Math.round(Math.random())) {
+  //   payload.sessions.push({
+  //     id: uuidv1(),
+  //     name: faker.random.word(),
+  //     image: "https://source.unsplash.com/random/30x30",
+  //     start: moment().add(sessionsDates[Math.floor(Math.random() * sessionsDates.length)], 'days').toDate(),
+  //     type: "session",
+  //     instructor: {
+  //       name: faker.name.findName(),
+  //       image: "https://source.unsplash.com/random/30x30",
+  //     },
+  //   });
+  // }
 
-  payload.inbox = [];
+  // if (Math.round(Math.random())) {
+  //   payload.sessions.push({
+  //     id: uuidv1(),
+  //     name: faker.random.word(),
+  //     image: "https://source.unsplash.com/random/30x30",
+  //     start: moment().add(sessionsDates[Math.floor(Math.random() * sessionsDates.length)], 'days').toDate(),
+  //     type: "session",
+  //     instructor: {
+  //       name: faker.name.findName(),
+  //       image: "https://source.unsplash.com/random/30x30",
+  //     },
+  //   });
+  // }
 
-  if (Math.round(Math.random())) {
-    payload.inbox.push(faker.company.catchPhrase());
-  }
+  // if (Math.round(Math.random())) {
+  //   payload.sessions.push({
+  //     id: uuidv1(),
+  //     name: faker.random.word(),
+  //     image: "https://source.unsplash.com/random/30x30",
+  //     start: moment().add(sessionsDates[Math.floor(Math.random() * sessionsDates.length)], 'days').toDate(),
+  //     type: "session",
+  //     instructor: {
+  //       name: faker.name.findName(),
+  //       image: "https://source.unsplash.com/random/30x30",
+  //     },
+  //   });
+  // }
 
-  if (Math.round(Math.random())) {
-    payload.inbox.push(faker.company.catchPhrase());
-  }
+  // payload.inbox = [];
 
-  if (Math.round(Math.random())) {
-    payload.inbox.push(faker.company.catchPhrase());
-  }
+  // if (Math.round(Math.random())) {
+  //   payload.inbox.push(faker.company.catchPhrase());
+  // }
 
-  channels_client.trigger("private-web-1929523201", "checkin", payload);
+  // if (Math.round(Math.random())) {
+  //   payload.inbox.push(faker.company.catchPhrase());
+  // }
+
+  // if (Math.round(Math.random())) {
+  //   payload.inbox.push(faker.company.catchPhrase());
+  // }
+
+  channels_client.trigger("private-web-533712854", "checkin", payload);
   res.status(200).json({}).end();
 });
 
@@ -557,7 +569,7 @@ server.get("/partners/trigger/del", (req, res) => {
   const [id] = ids.splice((ids.length - 1), 1);
 
 
-  channels_client.trigger("private-web-1929523201", "checkout", {
+  channels_client.trigger("private-web-533712854", "checkout", {
     id,
     checkOutTime: Date.now(),
   });
@@ -618,11 +630,11 @@ server.get('/partners/facilities', async (req, res) => {
         openingTime: '05:00'
       }
     },
-    companyId: 36,
+    companyId: 1029936548,
     status: 'active',
     addressId: 70,
     slug: 'limelight-fitness-656-avenue-of-the-americas',
-    facilityId: '1929523201',
+    facilityId: '533712854',
     address: {
       id: 70,
       street: '656 Avenue of the Americas',
@@ -636,6 +648,14 @@ server.get('/partners/facilities', async (req, res) => {
 
 
   res.status(200).json(payload).end();
+});
+
+
+
+server.post("/partners/qr", (req, res) => {
+  res.status(200).json({
+    qr: Math.random().toString(),
+  }).end();
 });
 
 
