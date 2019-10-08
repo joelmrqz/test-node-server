@@ -659,6 +659,107 @@ server.post("/partners/qr", (req, res) => {
 });
 
 
+server.get("/partners/me", (req, res) => {
+  const payload = {
+    "logo": "https://images-popin.s3.amazonaws.com/logos/flatiron-fitness.png",
+    "guest": {
+      "limit": 4,
+      "popin": true
+    },
+    "styles": {
+      "primaryColor": "blue",
+      "secondaryColor": "red"
+    },
+    "companyId": "1029936548",
+    "facilities": [
+      {
+        "name": "Flatiron Fitness",
+        "facilityId": "533712854",
+        "hours": {
+          "1": {
+            "closingTime": "23:00",
+            "openingTime": "06:00"
+          },
+          "2": {
+            "closingTime": "23:00",
+            "openingTime": "06:00"
+          },
+          "3": {
+            "closingTime": "23:00",
+            "openingTime": "06:00"
+          },
+          "4": {
+            "closingTime": "23:00",
+            "openingTime": "06:00"
+          },
+          "5": {
+            "closingTime": "23:00",
+            "openingTime": "06:00"
+          },
+          "6": {
+            "closingTime": "20:00",
+            "openingTime": "08:00"
+          },
+          "7": {
+            "closingTime": "20:00",
+            "openingTime": "08:00"
+          }
+        },
+        "price": 30,
+        "phone": "2129244600"
+      }
+    ]
+  }
+
+  res.status(200).json(payload).end();
+});
+
+
+/*
+{
+  "logo": "https://images-popin.s3.amazonaws.com/logos/flatiron-fitness.png",
+  "companyId": "1029936548",
+  "facilities": [
+    {
+      "name": "Flatiron Fitness",
+      "facilityId": "533712854",
+      "hours": {
+        "1": {
+          "closingTime": "23:00",
+          "openingTime": "06:00"
+        },
+        "2": {
+          "closingTime": "23:00",
+          "openingTime": "06:00"
+        },
+        "3": {
+          "closingTime": "23:00",
+          "openingTime": "06:00"
+        },
+        "4": {
+          "closingTime": "23:00",
+          "openingTime": "06:00"
+        },
+        "5": {
+          "closingTime": "23:00",
+          "openingTime": "06:00"
+        },
+        "6": {
+          "closingTime": "20:00",
+          "openingTime": "08:00"
+        },
+        "7": {
+          "closingTime": "20:00",
+          "openingTime": "08:00"
+        }
+      },
+      "price": 30,
+      "phone": "2129244600"
+    }
+  ]
+}*/
+
+
 
 const start = `# SERVER @ PORT ${server.get("port")} #`;
 const listener = () => console.log(start);
